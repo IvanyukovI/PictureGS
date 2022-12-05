@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LUY-gP-bEx">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--PictureGS-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MainVC" customModule="PictureGS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search pictures" translatesAutoresizingMaskIntoConstraints="NO" id="sjc-Y9-EnE">
+                                <rect key="frame" x="10" y="155" width="373" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Mgn-FW-XMS"/>
+                                </connections>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="r4C-Xs-9EN">
+                                <rect key="frame" x="10" y="211" width="373" height="607"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lFp-KZ-4Iv">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4h-8c-AFj">
+                                <rect key="frame" x="71.666666666666686" y="773" width="250" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0u7-3F-C80"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="8CG-63-FmL"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Load more" cornerStyle="capsule"/>
+                                <connections>
+                                    <action selector="loadMoreButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1ti-bm-409"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="r4C-Xs-9EN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="1b8-MV-aNU"/>
+                            <constraint firstItem="sjc-Y9-EnE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="A0X-vm-fyu"/>
+                            <constraint firstItem="r4C-Xs-9EN" firstAttribute="top" secondItem="sjc-Y9-EnE" secondAttribute="bottom" id="Rjz-fS-5lS"/>
+                            <constraint firstItem="e4h-8c-AFj" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-5" id="eL4-f2-1Mo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r4C-Xs-9EN" secondAttribute="trailing" constant="10" id="hm4-c2-xfa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="r4C-Xs-9EN" secondAttribute="bottom" id="pU7-dh-3PU"/>
+                            <constraint firstItem="e4h-8c-AFj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ppt-tf-aW0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sjc-Y9-EnE" secondAttribute="trailing" constant="10" id="sJI-eY-Z0Q"/>
+                            <constraint firstItem="sjc-Y9-EnE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="tDT-9k-v75"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="PictureGS" id="YUT-Oa-h0x">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="gearshape.fill" catalog="system" id="BeQ-Bg-Z4i">
+                            <connections>
+                                <action selector="toSettingsSearch:" destination="BYZ-38-t0r" id="3hh-eT-STI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="r4C-Xs-9EN" id="sHq-2i-Zef"/>
+                        <outlet property="loadMoreButton" destination="e4h-8c-AFj" id="NdH-gO-BIK"/>
+                        <outlet property="searchBar" destination="sjc-Y9-EnE" id="1XF-Rb-01w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="693.89312977099235" y="3.5211267605633805"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fea-Er-5lI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LUY-gP-bEx" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Nfe-xP-Hxy">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="1ay-8J-hLr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Lf-tC-3UJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-83.206106870229007" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="gearshape.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
