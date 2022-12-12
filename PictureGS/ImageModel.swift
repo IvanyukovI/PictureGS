@@ -20,6 +20,6 @@ struct Image: Codable {
     let title: String?
     let link: String?
     let original: String?
-    let is_product: Bool
+//    let is_product: Bool
        
 }

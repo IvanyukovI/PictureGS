@@ -45,7 +45,7 @@ class MainVC: UIViewController {
         self.collectionView.reloadData()
     }
     
-    func toSearch (text: String,page: Int) {
+    func toSearch (text: String, page: Int) {
         
         APICaller.shared.search(with: text.capitalizeFirstLetter(), page: page) { [weak self] result in
             DispatchQueue.main.async {
@@ -60,22 +60,6 @@ class MainVC: UIViewController {
             }
         }
     }
-    
-    func toNextPage (text: String,page: Int) {
-        
-        APICaller.shared.search(with: text.capitalizeFirstLetter(), page: page) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let image):
-                    self?.images = image
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    
 
     @IBAction func toSettingsSearch(_ sender: Any) {
         
@@ -92,11 +76,27 @@ class MainVC: UIViewController {
             start = 0
             page += 1
             images.removeAll()
-//            self.toSearch(text: text, page: page)
-            toNextPage(text: text, page: page)
+            self.toSearch(text: text, page: page)
         } else { start = itemsArray.count }
         loadMoreData()
         loadMoreButton.isHidden = true
+    }
+    
+    func loadMoreData() {
+        if !self.isLoading {
+            self.isLoading = true
+//            let start = itemsArray.count
+            let end = start + 19
+            DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
+                for i in self.start...end {
+                    self.itemsArray.append(self.images[i])
+                }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    self.isLoading = false
+                }
+            }
+        }
     }
     
 }
@@ -106,8 +106,8 @@ extension MainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let detailsVC = DetailsVC()
-        detailsVC.imagesModel = images
-        detailsVC.position = images[indexPath.item].position - 1
+        detailsVC.imagesModel = itemsArray
+        detailsVC.position = itemsArray[indexPath.item].position - 1
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "PictureGS", style: .done, target: nil, action: nil)
         show(detailsVC, sender: nil)
@@ -131,23 +131,7 @@ extension MainVC: UICollectionViewDataSource {
         }
     }
     
-    func loadMoreData() {
-        if !self.isLoading {
-            self.isLoading = true
-            
-//            let start = itemsArray.count
-            let end = start + 19
-            DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
-                for i in self.start...end {
-                    self.itemsArray.append(self.images[i])
-                }
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    self.isLoading = false
-                }
-            }
-        }
-    }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCVC.reuseId, for: indexPath) as? MainCVC else { return UICollectionViewCell() }
@@ -187,18 +171,6 @@ extension MainVC: UISearchBarDelegate {
         if searchText.count >= 5 {
             self.toSearch(text: searchText, page: page)
             self.text = searchText
-//            APICaller.shared.search(with: searchText.capitalizeFirstLetter(), page: page) { result in
-//                DispatchQueue.main.async {
-//                    switch result {
-//                    case .success(let image):
-//                        self.images = image
-//                        self.loadData()
-//                        self.collectionView.reloadData()
-//                    case .failure(let error):
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
             print(searchText)
         }
     }
