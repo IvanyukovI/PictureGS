@@ -39,7 +39,6 @@ class MainVC: UIViewController {
         for i in 0...19 {
             if !images.isEmpty {
                 itemsArray.append(images[i])
-                
             } else { return }
         }
         self.collectionView.reloadData()
@@ -52,6 +51,7 @@ class MainVC: UIViewController {
                 switch result {
                 case .success(let image):
                     self?.images = image
+//                    self?.loadMoreData()
                     self?.loadData()
                     self?.collectionView.reloadData()
                 case .failure(let error):
@@ -72,20 +72,26 @@ class MainVC: UIViewController {
     
     @IBAction func loadMoreButtonTap(_ sender: Any) {
         
+        loadMoreButtonClick()
+    }
+    
+    func loadMoreButtonClick () {
         if itemsArray.count % 100 == 0 {
             start = 0
             page += 1
             images.removeAll()
             self.toSearch(text: text, page: page)
-        } else { start = itemsArray.count }
+            loadData()
+        } else { start += 20
         loadMoreData()
+        }
         loadMoreButton.isHidden = true
     }
     
     func loadMoreData() {
         if !self.isLoading {
             self.isLoading = true
-//            let start = itemsArray.count
+            loadMoreData()
             let end = start + 19
             DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
                 for i in self.start...end {
@@ -128,6 +134,7 @@ extension MainVC: UICollectionViewDataSource {
         print(itemsArray.count % 100)
         if indexPath.row == itemsArray.count - 2, !self.isLoading {
             loadMoreButton.isHidden = false
+            
         }
     }
     
