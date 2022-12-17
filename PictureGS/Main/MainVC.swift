@@ -175,6 +175,9 @@ extension MainVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard searchText != "" || searchText != " " else { return }
+        collectionView.reloadData()
+        self.images.removeAll()
+        self.itemsArray.removeAll()
         if searchText.count >= 5 {
             self.toSearch(text: searchText, page: page)
             self.text = searchText
